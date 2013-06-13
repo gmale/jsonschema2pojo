@@ -16,9 +16,18 @@
 
 package com.googlecode.jsonschema2pojo.integration.config;
 
-import static com.googlecode.jsonschema2pojo.integration.util.CodeGenerationHelper.*;
-import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.*;
+import static com.googlecode.jsonschema2pojo.integration.util.CodeGenerationHelper.compile;
+import static com.googlecode.jsonschema2pojo.integration.util.CodeGenerationHelper.config;
+import static com.googlecode.jsonschema2pojo.integration.util.CodeGenerationHelper.generate;
+import static com.googlecode.jsonschema2pojo.integration.util.CodeGenerationHelper.generateAndCompile;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.instanceOf;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.nullValue;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.fail;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -85,6 +94,28 @@ public class AnnotationStyleIT {
         assertThat(generatedType.getAnnotation(JsonPropertyOrder.class), is(notNullValue()));
         assertThat(generatedType.getAnnotation(JsonInclude.class), is(notNullValue()));
         assertThat(getter.getAnnotation(JsonProperty.class), is(notNullValue()));
+    }
+    
+    @Test
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+    public void annotationStyleGsonProducesGsonAnnotations() throws ClassNotFoundException, SecurityException, NoSuchMethodException, NoSuchFieldException {
+	
+	File generatedOutputDirectory = generate("/schema/properties/primitiveProperties.json", "com.example",
+		config("annotationStyle", "gson"));
+	
+	assertThat(generatedOutputDirectory, not(containsText("org.codehaus.jackson")));
+	assertThat(generatedOutputDirectory, not(containsText("com.fasterxml.jackson")));
+	assertThat(generatedOutputDirectory, containsText("com.google.gson"));
+	assertThat(generatedOutputDirectory, containsText("@SerializedName"));
+	
+	ClassLoader resultsClassLoader = compile(generatedOutputDirectory);
+	
+	Class generatedType = resultsClassLoader.loadClass("com.example.PrimitiveProperties");
+	Method getter = generatedType.getMethod("getA");
+	
+	assertThat(generatedType.getAnnotation(JsonPropertyOrder.class), is(nullValue()));
+	assertThat(generatedType.getAnnotation(JsonInclude.class), is(nullValue()));
+	assertThat(getter.getAnnotation(JsonProperty.class), is(nullValue()));
     }
 
     @Test
