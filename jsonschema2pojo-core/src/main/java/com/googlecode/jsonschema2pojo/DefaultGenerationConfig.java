@@ -65,11 +65,11 @@ public class DefaultGenerationConfig implements GenerationConfig {
     }
 
     /**
-     * @return an empty array (i.e. no word delimiters)
+     * @return the default delimiters: _ -
      */
     @Override
     public char[] getPropertyWordDelimiters() {
-        return new char[] {};
+        return new char[] {'_', '-', ' '};
     }
 
     /**

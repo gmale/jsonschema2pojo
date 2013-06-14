@@ -57,7 +57,7 @@ public class Arguments implements GenerationConfig {
     private boolean usePrimitives = false;
 
     @Parameter(names = { "-d", "--word-delimiters" }, description = "The characters that should be considered as word delimiters when creating Java Bean property names from JSON property names")
-    private String propertyWordDelimiters = "_-";
+    private String propertyWordDelimiters = "_- ";
 
     @Parameter(names = { "-l", "--long-integers" }, description = "Use long (or Long) instead of int (or Integer) when the JSON Schema type 'integer' is encountered")
     private boolean useLongIntegers = false;

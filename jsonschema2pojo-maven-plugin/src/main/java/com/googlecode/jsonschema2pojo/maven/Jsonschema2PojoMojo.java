@@ -138,10 +138,10 @@ public class Jsonschema2PojoMojo extends AbstractMojo implements GenerationConfi
      * Java Bean property names.
      * 
      * @parameter expression="${jsonschema2pojo.propertyWordDelimiters}"
-     *            default-value=""
+     *            default-value="_- "
      * @since 0.2.2
      */
-    private String propertyWordDelimiters = "";
+    private String propertyWordDelimiters = "_- ";
 
     /**
      * Whether to use the java type <code>long</code> (or <code>Long</code>)

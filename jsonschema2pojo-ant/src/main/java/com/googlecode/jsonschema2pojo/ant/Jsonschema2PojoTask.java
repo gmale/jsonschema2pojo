@@ -67,7 +67,7 @@ public class Jsonschema2PojoTask extends Task implements GenerationConfig {
 
     private boolean skip;
 
-    private char[] propertyWordDelimiters = new char[] {};
+    private char[] propertyWordDelimiters = new char[] {'_', '-', ' '};
 
     private boolean useLongIntegers;
 

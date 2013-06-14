@@ -10,6 +10,9 @@
         },
         "c" : {
             "type" : "boolean"
+        },
+        "object_id" : {
+            "type" : "integer"
         }
     }
 }

@@ -41,7 +41,7 @@ public class AbsoluteRefIT {
         Class<?> addressClass = absoluteRefClass.getMethod("getAddress").getReturnType();
 
         assertThat(addressClass.getName(), is("com.example.Address"));
-        assertThat(addressClass.getMethods(), hasItemInArray(hasProperty("name", equalTo("getPostal_code"))));
+        assertThat(addressClass.getMethods(), hasItemInArray(hasProperty("name", equalTo("getPostalCode"))));
 
     }
 
